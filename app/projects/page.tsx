@@ -7,6 +7,12 @@ import { NewProjectForm } from "@/features/projects/components/new-project-form"
 import { ProjectsGrid } from "@/features/projects/components/projects-grid";
 import { useProjects } from "@/features/projects/hooks/use-projects";
 import { SearchFilterBar } from "@/features/projects/components/search-filter-bar";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 export default function ProjectsPage() {
   // ← no more props needed
@@ -55,7 +61,7 @@ export default function ProjectsPage() {
         activeCount={activeCount}
         archivedCount={archivedCount}
       />
-      {showNewProject && (
+      {/* {showNewProject && (
         <NewProjectForm
           projectName={projectName}
           projectDescription={projectDescription}
@@ -66,7 +72,25 @@ export default function ProjectsPage() {
           onCreateProject={handleCreateProject}
           onCancel={handleCancelNewProject}
         />
-      )}
+      )} */}
+      <Dialog open={showNewProject} onOpenChange={setShowNewProject}>
+        <DialogContent className="max-w-lg p-0">
+          <DialogHeader className="px-4 pt-4">
+            <DialogTitle>Create New Project</DialogTitle>
+          </DialogHeader>
+
+          <NewProjectForm
+            projectName={projectName}
+            projectDescription={projectDescription}
+            projectTags={projectTags}
+            onProjectNameChange={setProjectName}
+            onProjectDescriptionChange={setProjectDescription}
+            onProjectTagsChange={setProjectTags}
+            onCreateProject={handleCreateProject}
+            onCancel={handleCancelNewProject}
+          />
+        </DialogContent>
+      </Dialog>
       <SearchFilterBar
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
