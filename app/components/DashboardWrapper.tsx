@@ -1,40 +1,35 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useMemo, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import DashboardLayout from "./dashboard-layout";
 
 type PageType = "projects" | "upload" | "eda" | "model" | "export";
 
+const VALID_PAGES = new Set<PageType>([
+  "projects",
+  "upload",
+  "eda",
+  "model",
+  "export",
+]);
+
 export default function DashboardWrapper({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const pathname = usePathname();
-  const [currentProject, setCurrentProject] = useState<string>("");
 
-  // Derive current page directly from pathname (no useEffect needed)
+  // Derive current page from URL — no state, no effect, no drift
   const currentPage = useMemo<PageType>(() => {
-    const path = pathname.split("/")[1] || "projects";
-    if (["projects", "upload", "eda", "model", "export"].includes(path)) {
-      return path as PageType;
-    }
-    return "projects";
+    const segment = pathname.split("/")[1] || "projects";
+    return VALID_PAGES.has(segment as PageType)
+      ? (segment as PageType)
+      : "projects";
   }, [pathname]);
 
-  const handleNavigate = (page: PageType) => {
-    // This is just for the sidebar's onNavigate callback
-    // The actual navigation happens via router.push in the sidebar
-  };
-
   return (
-    <DashboardLayout
-      currentPage={currentPage}
-      onNavigate={handleNavigate}
-      currentProject={currentProject}
-    >
-      {children}
-    </DashboardLayout>
+    <DashboardLayout currentPage={currentPage}>{children}</DashboardLayout>
   );
 }

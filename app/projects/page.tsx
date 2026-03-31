@@ -1,22 +1,23 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useProject } from "@/context/project-context"; // ← use context
 import { PageHeader } from "@/features/projects/components/page-header";
 import { NewProjectForm } from "@/features/projects/components/new-project-form";
 import { ProjectsGrid } from "@/features/projects/components/projects-grid";
 import { useProjects } from "@/features/projects/hooks/use-projects";
-import type { ProjectsPageProps } from "@/features/projects/types";
 import { SearchFilterBar } from "@/features/projects/components/search-filter-bar";
 
-export default function ProjectsPage({
-  onSelectProject,
-  onNavigate,
-}: ProjectsPageProps) {
+export default function ProjectsPage() {
+  // ← no more props needed
+  const router = useRouter();
+  const { setCurrentProject } = useProject(); // ← write to shared context
+
   const {
     projects,
     totalProjects,
     activeCount,
     archivedCount,
-
     showNewProject,
     projectName,
     projectDescription,
@@ -27,38 +28,33 @@ export default function ProjectsPage({
     setProjectTags,
     handleCreateProject,
     handleCancelNewProject,
-
     searchQuery,
     setSearchQuery,
     filterStatus,
     setFilterStatus,
     sortKey,
     setSortKey,
-
     handleRenameProject,
     handleDeleteProject,
     handleToggleArchive,
     handleDuplicateProject,
   } = useProjects();
 
-  const handleProjectSelect = (projectName: string) => {
-    onSelectProject(projectName);
-    onNavigate("upload");
+  const handleProjectSelect = (name: string) => {
+    setCurrentProject(name); // ← updates ProjectContext → sidebar sees it
+    router.push("/upload"); // ← navigate directly, no prop callback needed
   };
 
   const isFiltered = searchQuery.trim().length > 0 || filterStatus !== "all";
 
   return (
     <div className="p-6 space-y-5">
-      {/* Header with stats */}
       <PageHeader
         onNewProject={() => setShowNewProject(true)}
         totalProjects={totalProjects}
         activeCount={activeCount}
         archivedCount={archivedCount}
       />
-
-      {/* New project form (inline, collapsible) */}
       {showNewProject && (
         <NewProjectForm
           projectName={projectName}
@@ -71,8 +67,6 @@ export default function ProjectsPage({
           onCancel={handleCancelNewProject}
         />
       )}
-
-      {/* Search / filter / sort bar */}
       <SearchFilterBar
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -82,8 +76,6 @@ export default function ProjectsPage({
         onSortChange={setSortKey}
         resultCount={projects.length}
       />
-
-      {/* Grid */}
       <ProjectsGrid
         projects={projects}
         onSelectProject={handleProjectSelect}
