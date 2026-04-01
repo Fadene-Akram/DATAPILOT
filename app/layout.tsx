@@ -6,14 +6,29 @@ import { ModelProvider } from "../context/model-context";
 import { ProjectProvider } from "../context/project-context";
 import DashboardWrapper from "./components/DashboardWrapper";
 import "./globals.css";
-
 // Keep as a Server Component — no "use client" here.
 // All client-side logic lives in DashboardWrapper.
 
-const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
-const geistMono = Geist_Mono({
-  subsets: ["latin"],
-  variable: "--font-geist-mono",
+import localFont from "next/font/local";
+
+const geist = localFont({
+  src: [
+    { path: "../public/fonts/Geist[wght].woff2", style: "normal" },
+    { path: "../public/fonts/Geist-Italic[wght].woff2", style: "italic" },
+  ],
+  variable: "--font-sans",
+  weight: "100 900",
+  display: "swap",
+});
+
+const geistMono = localFont({
+  src: [
+    { path: "../public/fonts/GeistMono[wght].woff2", style: "normal" },
+    { path: "../public/fonts/GeistMono-Italic[wght].woff2", style: "italic" },
+  ],
+  variable: "--font-mono",
+  weight: "100 900",
+  display: "swap",
 });
 
 export const metadata = {

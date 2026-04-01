@@ -41,7 +41,7 @@ export function DataOverviewCard({ dataState }: DataOverviewCardProps) {
             <p className="text-xs text-muted-foreground uppercase tracking-wide">
               Missing Values
             </p>
-            <p className="text-2xl font-bold text-accent mt-1">
+            <p className="text-2xl font-bold text-foreground mt-1">
               {dataState.missingValues.toFixed(1)}%
             </p>
           </div>

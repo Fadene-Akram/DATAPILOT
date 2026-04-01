@@ -67,13 +67,18 @@ export function SearchFilterBar({
       {/* Sort select */}
       <div className="flex items-center gap-2 shrink-0">
         <SlidersHorizontal className="w-3.5 h-3.5 text-muted-foreground" />
+
         <select
           value={sortKey}
           onChange={(e) => onSortChange(e.target.value as SortKey)}
-          className="text-xs bg-input border border-border rounded-lg px-2 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+          className="text-xs bg-input border border-border rounded-lg px-2 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer"
         >
           {SORT_OPTIONS.map((opt) => (
-            <option key={opt.value} value={opt.value}>
+            <option
+              key={opt.value}
+              value={opt.value}
+              className="bg-card text-foreground"
+            >
               {opt.label}
             </option>
           ))}

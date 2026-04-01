@@ -61,18 +61,7 @@ export default function ProjectsPage() {
         activeCount={activeCount}
         archivedCount={archivedCount}
       />
-      {/* {showNewProject && (
-        <NewProjectForm
-          projectName={projectName}
-          projectDescription={projectDescription}
-          projectTags={projectTags}
-          onProjectNameChange={setProjectName}
-          onProjectDescriptionChange={setProjectDescription}
-          onProjectTagsChange={setProjectTags}
-          onCreateProject={handleCreateProject}
-          onCancel={handleCancelNewProject}
-        />
-      )} */}
+
       <Dialog open={showNewProject} onOpenChange={setShowNewProject}>
         <DialogContent className="max-w-lg p-0">
           <DialogHeader className="px-4 pt-4">

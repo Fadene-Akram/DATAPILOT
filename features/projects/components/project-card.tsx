@@ -264,7 +264,7 @@ export function ProjectCard({
             icon={<BrainCircuit className="w-3.5 h-3.5" />}
             value={project.models}
             label="Models"
-            color="text-accent"
+            color="text-primary"
           />
         </div>
 
