@@ -12,8 +12,15 @@ import { DataVisualizationCard } from "@/features/eda/components/data-visualizat
 import { DataTableCard } from "@/features/eda/components/data-table-card";
 import { useEdaOperations } from "@/features/eda/hooks/use-eda-operations";
 import type { EdaPageProps } from "@/features/eda/types";
+import { useRouter } from "next/navigation";
 
 export default function EdaPage({ data }: EdaPageProps) {
+  const router = useRouter();
+
+  function handlePreceedToModelBuilding() {
+    router.push("/model");
+  }
+
   const { dataState, appliedOperations, handleApplyTool, handleUndoOperation } =
     useEdaOperations();
 
@@ -44,7 +51,10 @@ export default function EdaPage({ data }: EdaPageProps) {
       {/* New Data Table Section */}
       <DataTableCard />
 
-      <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+      <Button
+        className="bg-primary hover:bg-primary/90 text-primary-foreground"
+        onClick={handlePreceedToModelBuilding}
+      >
         <Plus className="w-4 h-4 mr-2" />
         Proceed to Model Building
       </Button>

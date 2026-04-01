@@ -176,7 +176,7 @@ export default function Sidebar({ currentPage, onClose }: SidebarProps) {
                   lg:px-3
                   ${
                     isActive
-                      ? "bg-sidebar-primary text-sidebar-primary-foreground shadow-sm"
+                      ? "bg-primary text-sidebar-primary-foreground shadow-sm"
                       : done
                         ? "text-sidebar-foreground hover:bg-sidebar-accent/20"
                         : locked
